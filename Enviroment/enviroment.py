@@ -122,6 +122,13 @@ class Enviroment:
         self.info.clear()
         self.done = False
 
+        self.np_game[((self.np_game==ID_BOAT) + (self.np_game==ID_TRAVEL))] = ID_WATER
+        #Init static elements (buoys and ports)
+        for x, y in BUOY_POSITION:
+            self.np_game[x, y] = ID_BUOY
+        for x, y in PORT_POSITION:
+            self.np_game[x, y] = ID_PORT
+
         source, destiny = sample(range(0, MAX_PORTS-1), 2)
         self.np_game[PORT_POSITION[source][0], PORT_POSITION[source][1]] = ID_BOAT
         self.np_game[PORT_POSITION[destiny][0], PORT_POSITION[destiny][1]] = ID_DESTINY_PORT
@@ -132,53 +139,59 @@ class Enviroment:
         x, y = np.where(self.np_game == ID_DESTINY_PORT)
         self.info.append(x[0])
         self.info.append(y[0])
+        self.info.append(False)
+
         return self.state, self.info
 
     #Execute and action
     def step(self, action):
-        correct = False
+        self.info[2] = False
 
         if action == UP:
-            correct = self.__move(self.state[0], self.state[1]-1)
+            self.info[2] = self.__move(self.state[0]-1, self.state[1])
         elif action == DOWN:
-            correct = self.__move(self.state[0]+1, self.state[1])
+            self.info[2] = self.__move(self.state[0]+1, self.state[1])
         elif action == RIGTH:
-            correct = self.__move(self.state[0], self.state[1]+1)
+            self.info[2] = self.__move(self.state[0], self.state[1]+1)
         elif action == LEFT:
-            correct = self.__move(self.state[0], self.state[1]-1)
+            self.info[2] = self.__move(self.state[0], self.state[1]-1)
 
-        if correct:
+        if self.info[2]:
             self.__increment_duration(10)
 
-        return self.state, self.reward, self.done, self.info, correct
+        
+
+        return self.state, self.reward, self.done, self.info
 
     def __move(self, x, y):
-        if self.np_game[x, y] == ID_GROUND:
+        if self.np_game[x, y] == ID_GROUND or self.np_game[x, y] == ID_PORT:
             self.reward = 0
             return False
-        elif self.np_game[x, y] == ID_WATER:
-            self.np_game[x, y] = ID_BOAT
-            self.reward = -1
-        elif self.np_game[x, y] == ID_BUOY:
-            self.np_game[x, y] = ID_BOAT
-            self.reward = 10
-            self.old_buoy = True
-        elif self.np_game[x, y] == ID_PORT:
-            self.np_game[x, y] = ID_BOAT
-            self.reward = 100
-            self.done = True
-        elif self.np_game[x,y] == ID_OLD_BUOY:
-            self.np_game[x,y] = ID_BOAT
-            self.reward = -1
-            self.old_buoy = True
-
-        if self.old_buoy:
-            self.np_game[self.state[0], self.state[1]] = ID_OLD_BUOY
-            self.old_buoy = False
         else:
-            self.np_game[self.state[0], self.state[1]] = ID_TRAVEL
+            if self.old_buoy:
+                self.np_game[self.state[0], self.state[1]] = ID_OLD_BUOY
+                self.old_buoy = False
+            else:
+                self.np_game[self.state[0], self.state[1]] = ID_TRAVEL
 
-        return True
+            if self.np_game[x, y] == ID_WATER or self.np_game[x, y] == ID_TRAVEL:
+                self.reward = -1
+            elif self.np_game[x, y] == ID_BUOY:
+                self.reward = 10
+                self.old_buoy = True
+            elif self.np_game[x, y] == ID_DESTINY_PORT:
+                self.reward = 100
+                self.done = True
+            elif self.np_game[x,y] == ID_OLD_BUOY:
+                self.reward = -1
+                self.old_buoy = True
+            else:
+                print('Uknow: ', self.np_game[x,y])
+
+            self.np_game[x,y] = ID_BOAT
+            self.state[0] = x
+            self.state[1] = y
+            return True
 
 
 
@@ -187,8 +200,6 @@ N_EPISODES = 20
 MAX_ITER = 100
 
 env = Enviroment()
-state, info = env.reset()
-print(state, info)
 
 for episode in range (N_EPISODES):
     state, info = env.reset()
@@ -197,131 +208,9 @@ for episode in range (N_EPISODES):
     episode_reward = 0
 
     while not done and iteration < MAX_ITER:
-        state, reward, done, _, correct = env.step(random.randint(0,3))
+        action = random.randint(0,3)
+        state, reward, done, info = env.step(action)
         episode_reward += reward
+        iteration += 1
     print (done, episode_reward)
-env.render()
-
-
-
-
-
-"""def move(l_frames, frame, action):
-    x, y = np.where(frame == ID_BOAT)
-    x, y = x[0], y[0]
-    if action == UP:
-        if frame[x-1, y] == ID_GROUND:
-            #return ERROR
-            pass
-        else:
-            frame[x, y] = ID_TRAVEL
-            frame[x-1, y] = ID_BOAT
-    elif action == DOWN:
-        if frame[x+1, y] == ID_GROUND:
-            #return ERROR
-            pass
-        else:
-            frame[x, y] = ID_TRAVEL
-            frame[x+1, y] = ID_BOAT
-    elif action == RIGTH:
-        if frame[x, y+1] == ID_GROUND:
-            #return ERROR
-            pass
-        else:
-            frame[x, y] = ID_TRAVEL
-            frame[x, y+1] = ID_BOAT
-    elif action == LEFT:
-        if frame[x, y-1] == ID_GROUND:
-            #return ERROR
-            pass
-        else:
-            frame[x, y] = ID_TRAVEL
-            frame[x, y-1] = ID_BOAT
-    else:
-            #return ERROR
-            pass
-
-    l_frames = increment_duration(l_frames, frame, 15)
-    return frame, l_frames"""
-
-
-
-"""def increment_duration(l_frames, frame, n_frames):
-    for i in range(n_frames):
-        l_frames.append(copy.copy(frame))
-    return l_frames"""
-
-"""def zoom(frame, l_frame):
-    step = 10
-    x_min = 0
-    x_max = frame.shape[0]
-    y_min = 0
-    y_max = frame.shape[1]
-    static_frame = copy.copy(frame)
-    while x_min != X_MIN or x_max != X_MAX or y_min != Y_MIN or y_max != Y_MAX:
-        x_min = min(X_MIN, x_min + step)
-        x_max = max(X_MAX, x_max - step)
-        y_min = min(Y_MIN, y_min + step)
-        y_max = max(Y_MAX, y_max - step)
-        frame = static_frame[y_min:y_max, x_min:x_max]
-        l_frame = increment_duration(l_frame, frame, 10)
-    return frame, l_frame
-
-def init(frame):
-    for x, y in BUOY_POSITION:
-        frame[x, y] = ID_BUOY
-    for x, y in PORT_POSITION:
-        frame[x, y] = ID_PORT
-    return frame
-
-def render(frames):
-    out = cv2.VideoWriter('output.mp4', cv2.VideoWriter_fourcc(*'mp4v'), FPS, SIZE_RENDER)
-    for single_frame in frames:
-        np_render = np.zeros((single_frame.shape[0], single_frame.shape[1], 3), dtype='uint8')
-
-        np_render[single_frame==ID_WATER,:] = COLOR_WATER
-        np_render[single_frame==ID_GROUND,:] = COLOR_GROUND
-        np_render[single_frame==ID_STORM,:] = COLOR_STORM
-        np_render[single_frame==ID_PORT,:] = COLOR_PORT
-        np_render[single_frame==ID_BUOY,:] = COLOR_BUOY
-        np_render[single_frame==ID_DESTINY_PORT,:] = COLOR_DESTINY_PORT
-        np_render[single_frame==ID_TRAVEL,:] = COLOR_TRAVEL
-
-        x, y = np.where(single_frame == ID_BOAT)
-        if (x != None and y != None):
-            x, y = x[0], y[0]
-            np_render[x, y-3:y+3, :] = [65, 138, 222]
-            np_render[x+1, y-2:y+2, :] = [65, 138, 222]
-            np_render[x-4:x, y, :] = [0, 0, 0]
-            np_render[x-4:x-1, y+1, :] = [255, 255, 255]
-            np_render[x-3, y+2, :] = [255, 255, 255]
-
-
-        data1 = cv2.resize(np_render, SIZE_RENDER, interpolation = cv2.INTER_AREA)
-        out.write(data1)
-    out.release()"""
-
-"""list_frames = []
-_, np_game = cv2.threshold(cv2.imread('img/mapa_mundi_binario.jpg',cv2.IMREAD_GRAYSCALE), 0, 1, cv2.THRESH_OTSU)
-list_frames = increment_duration(list_frames, np_game, 50)"""
-
-
-"""np_game, list_frames = zoom(np_game, list_frames)
-np_game = cv2.resize(np_game, SIZE_GAME, interpolation = cv2.INTER_AREA)
-list_frames = increment_duration(list_frames, np_game, 25)"""
-
-
-"""np_game = init(np_game)
-source, destiny = sample(range(0, MAX_PORTS-1), 2)
-np_game[PORT_POSITION[source][0], PORT_POSITION[source][1]] = ID_BOAT
-np_game[PORT_POSITION[destiny][0], PORT_POSITION[destiny][1]] = ID_DESTINY_PORT
-list_frames = increment_duration(list_frames, np_game, 25)
-
-
-for i in range(20):
-    np_game, list_frames = move(list_frames, np_game, random.randint(0,3))
-
-
-render(list_frames)"""
-
-
+#env.render()
