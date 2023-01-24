@@ -53,7 +53,7 @@ The environment output is the updated matrix and a reward. The value of the rewa
 ## Conclusions
 
 ## Final video
-[![Ship learning](https://img.youtube.com/vi/wj3ZSi1u1rY/0.jpg)](https://youtu.be/wj3ZSi1u1rY)
+[![Ship learning](https://img.youtube.com/vi/wj3ZSi1u1rY/0.jpg)](https://www.youtube.com/watch?v=wj3ZSi1u1rY)
 <br/>
 Click on the image to view the video on YouTube.
 
