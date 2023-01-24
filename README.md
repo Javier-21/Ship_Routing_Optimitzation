@@ -26,13 +26,13 @@ The project wants to solve the previous problem by modifying the route of the bo
 The environment is like a game. We have an image of the Atlantic Ocean and we can manage the movement of a ship and we receive a response and a new image with the updated information.
 
 ### Creation
-<img src="https://github.com/Javier-21/Ship_Routing_Optimitzation/blob/master/rsc/map_enviroment.png" align="right" width="400" alt="Enviroment map"/>
+<img src="https://github.com/Javier-21/Ship_Routing_Optimitzation/blob/master/rsc/map_enviroment.png" align="right" width="350" alt="Enviroment map"/>
 
 To create the simulator, I used python to code. I took an image of the world and resized the image to have just the Atlantic Ocean as a 100x100 matrix. On the screen there are seven different elements:
 * Water: In these cells the ship can move without problems.
 * Land: The ship cannot move in these cells.
 * Ship: Is the agent that we want to manage.
-* Buoys: Sre the elements that we want to cross before reaching the destination.
+* Buoys: Are the elements that we want to cross before reaching the destination.
 * Storm: They are water cells, but in this case the ship moves slower.
 * Ports: There are 5 cells indicating the ports, but only one is the destination port.
 * Route line: It is a red line that indicates where the ship was.
@@ -53,7 +53,7 @@ The environment output is the updated matrix and a reward. The value of the rewa
 ## Conclusions
 
 ## Final video
-[![Ship learning](https://i9.ytimg.com/vi_webp/wj3ZSi1u1rY/mq2.webp?sqp=CISIwJ4G-oaymwEmCMACELQB8quKqQMa8AEB-AG-AoAC4AOKAgwIABABGBQgEyh_MA8=&rs=AOn4CLA96IynOqAXhxMnUuD5b7Q5UAkh9Q)](https://youtu.be/wj3ZSi1u1rY)
+[![Ship learning](https://github.com/Javier-21/Ship_Routing_Optimitzation/blob/master/rsc/map_enviroment.png)](https://youtu.be/wj3ZSi1u1rY)
 <br/>
 Click on the image to view the video on YouTube.
 
