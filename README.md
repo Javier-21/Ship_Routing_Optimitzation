@@ -51,8 +51,9 @@ The environment output is the updated matrix and a reward. The value of the rewa
 ## Solutions
 Now we have the environment to simulate the navigation of the ship. The next step is to implement an algorithm to solve the problem. I have applied a reinforcement learning algorithm. The field is based on learning by trial and error. In order to implement this, we need an environment where we can enter an action, and it returns a reward and a state. This environment is the simulator that I created earlier. The agent that performs the actions and receives the output of the environment is the ship in this project.
 
-<img src="https://github.com/Javier-21/Ship_Routing_Optimitzation/blob/master/rsc/rl_image.png" align="center" width="350" alt="Reinforcement learning"/>
-
+<p align="center">
+<img src="https://github.com/Javier-21/Ship_Routing_Optimitzation/blob/master/rsc/rl_image.png" width="400" alt="Reinforcement learning"/>
+</p>
 
 ## Conclusions
 
