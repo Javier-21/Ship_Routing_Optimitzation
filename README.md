@@ -11,7 +11,7 @@
 * [Solutions](#solutions)
    * [First solution. No heuristics](#first-solution-no-heuristics)
    * [Second solution. Heuristic 1: No return](#second-solution-heuristic-1-no-return)
-   * [Third solution. Heuristic 2: Direction of destination](#third-solution.-heuristic-2:-direction-of-destination)
+   * [Third solution. Heuristic 2: Direction of destination](#third-solution-heuristic-2-direction-of-destination)
 * [Conclusions](#conclusions)
 * [Final video](#final-video)
 * [Author](#author)
@@ -92,9 +92,13 @@ $$ r = r * (1 + |β|/180) $$
 
 β is the angle, and it is used in absolute value because the direction does not matter, only the angle is relevant. Like the previous heuristic, the reward is only changed if it is negative.
 
+The success rate for this solution is the worst of the three, but it's still a good result, only making mistakes in two cases. Now, in the following image, we see a case of failure of this algorithm.
+
 <p align="center">
 <img src="https://github.com/Javier-21/Ship_Routing_Optimitzation/blob/master/rsc/h2_heatmap.png" width="400" alt="Error solution 1"/>
 </p>
+
+When we leave port 2 we may not reach the destination port. This is because the heuristics make the learning process very goal oriented and it is difficult to use knowledge from the other ports. To arrive successfully, it is necessary that you are not too far from the destination port or that there is a port in the same direction and in the middle of the way.
 
 ## Conclusions
 
