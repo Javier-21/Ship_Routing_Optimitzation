@@ -80,11 +80,19 @@ The green dot is the destination and the rest of the red dots are the different 
 ### Second solution. Heuristic 1: No return
 <img src="https://github.com/Javier-21/Ship_Routing_Optimitzation/blob/master/rsc/h1.png" align="right" width="400" alt="Heuristic 1: No return"/>
 
-In the second solution we applied a heuristic. We need to found the vector what joins the ship with the destination port and calculate the perpendiculate that split the map in two areas. In case to do a movement in the area where there isn't the destination port the negative rewards are duplicated.
+In the second solution we apply a heuristic. We need to find the vector that joins the ship to the destination port and calculate the perpendicular that divides the map into two areas. In case of making a movement in the area where the destination port is not located, the negative rewards are doubled.
 
-The result with this solution are perfect, all the route finish successfully. In this sections we are talking only to the success rate of ship routing, but in posteriours section we talk abaout the cross buoys and distances.
+The result with this solution is perfect, all the trips end successfully. In this section we are only talking about the success rate of boat routes, but in later sections we will talk about crossed buoys and distances.
 
 ### Third solution. Heuristic 2: Direction of destination
+<img src="https://github.com/Javier-21/Ship_Routing_Optimitzation/blob/master/rsc/h2.png" align="right" width="400" alt="Heuristic 1: No return"/>
+In this solution we apply other heuristic. In this case we need to find the vector that joins the ship with the destination port too. The difference is that now we calculate the angle with this vector and each movement. Depends of the grade we modify the reward multiplying for a factor between 1 and 2. The reward is calculated with the next formula:
+
+$$ r = r * (1 + |β|/180) $$
+
+<p align="center">
+<img src="https://github.com/Javier-21/Ship_Routing_Optimitzation/blob/master/rsc/h2_heatmap.png" width="400" alt="Error solution 1"/>
+</p>
 
 ## Conclusions
 
