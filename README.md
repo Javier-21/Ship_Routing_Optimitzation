@@ -55,6 +55,12 @@ Now we have the environment to simulate the navigation of the ship. The next ste
 <img src="https://github.com/Javier-21/Ship_Routing_Optimitzation/blob/master/rsc/rl_image.png" width="400" alt="Reinforcement learning"/>
 </p>
 
+The specific algorithm I used was Q-learning. To implement this we need to build a matrix with all possible states and for each state all possible moves. For this project we need a 100x100x4 shape matrix. Each cell contains a reward value for performing an action in a specific state. The value is updated using the following formula:
+
+$Q^new(s_t, a_t)=(1-α)*Q(s_t, a_t)+α*(r+γ*max_{a_{t+1}}Q(s_{t+1}, a_{t+1}))
+
+One matrix is useful for one destination port, for this reason we need to build five matrix, one for each port. When we have the matrix we must begin to learn, for this we begin to move the ship randomly. During iterations, we started mixing random actions and matrix-based actions. In the end, actions will be taken mostly based on the matrix. To control for chance we need to use a variable ε. This variable will decrease exponentially with the step of the iteration until reaching the minimum.
+
 ## Conclusions
 
 ## Final video
