@@ -101,6 +101,30 @@ The success rate for this solution is the worst of the three, but it's still a g
 When we leave port 2 we may not reach the destination port. This is because the heuristics make the learning process very goal oriented and it is difficult to use knowledge from the other ports. To arrive successfully, it is necessary that you are not too far from the destination port or that there is a port in the same direction and in the middle of the way.
 
 ## Conclusions
+At this point we have three solutions to solve this problem. In the following table we can see the summary of the success rate of each solution.
+| Solution | Success rate |
+| :---: | :---: |
+| No heuristics | 95% |
+| No return | 100% |
+| Direction of destination | 90% |
+
+If we only see this we can say that *heuristic of no return* is the best, and this it is correct if we want a solution where the priority is on the success rate. In the following table are the reward of each solution, the number of steps to reach the destination and the number of crossed buoys.
+| Solution | Reward | Steps | Buoys |
+| :---: | :---: | :---: | :---: |
+| No heuristics | 1442 | 431 | 23 |
+| No return | 1470 | 431 | 24 |
+| Direction of destination | 1434 | 431 | 22 |
+
+Now in this table we can see that the best reward is the *heuristic of no return*, that is, the one with the best balance between crossed buoys and number of steps. But in terms of number of steps the best solution is *heuristic of direction of destination*.
+
+With this information we can conclude that if we need to choose a generic solution we select *heuristic of no return*, but if the priority is the number of steps we choose *heuristic of direction of destination* with the warning that it may fail in some situations.
+
+To finish, I show how different algorithms give a different solution to the same problem.
+<p align="center">
+<img src="https://github.com/Javier-21/Ship_Routing_Optimitzation/blob/master/rsc/final_conclusion.png" width="400" alt="Different solutions"/>
+</p>
+In the image we can see how the ship takes a different route. In the image on the left we use the solution *no heuristics* and in the image on the right is the solution *heuristic of no return*.
+
 
 ## Final video
 [![Ship learning](https://img.youtube.com/vi/wj3ZSi1u1rY/0.jpg)](https://www.youtube.com/watch?v=wj3ZSi1u1rY)
