@@ -103,8 +103,10 @@ When we leave port 2 we may not reach the destination port. This is because the 
 ## Conclusions
 
 ## Final video
+<p align="center">
 [![Ship learning](https://img.youtube.com/vi/wj3ZSi1u1rY/0.jpg)](https://www.youtube.com/watch?v=wj3ZSi1u1rY)
 <br/>
+<\p>
 Click on the image to view the video on YouTube.
 
 ## Author
