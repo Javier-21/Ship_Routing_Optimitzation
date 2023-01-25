@@ -102,22 +102,18 @@ When we leave port 2 we may not reach the destination port. This is because the 
 
 ## Conclusions
 At this point we have three solutions to solve this problem. In the following table we can see the summary of the success rate of each solution.
-<p align="center">
 | Solution | Success rate |
 | :---: | :---: |
 | No heuristics | 95% |
 | No return | 100% |
 | Direction of destination | 90% |
-</p>
 
 If we only see this we can say that *heuristic of no return* is the best, and this it is correct if we want a solution where the priority is on the success rate. In the following table are the reward of each solution, the number of steps to reach the destination and the number of crossed buoys.
-<p align="center">
 | Solution | Reward | Steps | Buoys |
 | :---: | :---: | :---: | :---: |
 | No heuristics | 1442 | 431 | 23 |
 | No return | 1470 | 431 | 24 |
 | Direction of destination | 1434 | 431 | 22 |
-</p>
 
 Now in this table we can see that the best reward is the *heuristic of no return*, that is, the one with the best balance between crossed buoys and number of steps. But in terms of number of steps the best solution is *heuristic of direction of destination*.
 
