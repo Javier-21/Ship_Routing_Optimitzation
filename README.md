@@ -9,6 +9,9 @@
     * [Creation](#creation)
     * [Inputs and Outputs](#inputs-and-outputs)
 * [Solutions](#solutions)
+   * [First solution. No heuristics](first-solution.-no-heuristics)
+   * [Second solution. Heuristic 1: No return](second-solution.-heuristic-1:-no-return)
+   * [Third solution. Heuristic 2: Direction of destination](third-solution.-heuristic-2:-direction-of-destination)
 * [Conclusions](#conclusions)
 * [Final video](#final-video)
 * [Author](#author)
@@ -66,8 +69,20 @@ One matrix is useful for one destination port, for this reason we need to build 
 I created three solutions based on this algorithm and applying some heuristic technique on some solutions. For all solutions, I initialize the matrix to the value minus infinity.
 
 ### First solution. No heuristics
+In this first solution I applied the original algorithm, without variation. The result was very good, only one route is unsuccessful. In the following image we can see the heat map of the Q matrix at the end of the training to study this error case.
+
+<p align="center">
+<img src="https://github.com/Javier-21/Ship_Routing_Optimitzation/blob/master/rsc/sh_heatmap.png" width="400" alt="Error solution 1"/>
+</p>
+
+The green dot is the destination and the rest of the red dots are the different origin ports. The error appears when we start at port 3. The drawback of the algorithm is that when the port is very far from the destination and there are no intermediate ports on the routes, you will likely have trouble reaching the destination. If there is a port in the middle, it probably fixes this error, because learning from each port is used for the others.
 
 ### Second solution. Heuristic 1: No return
+<img src="https://github.com/Javier-21/Ship_Routing_Optimitzation/blob/master/rsc/h1.png" align="right" width="400" alt="Heuristic 1: No return"/>
+
+In the second solution we applied a heuristic. We need to found the vector what joins the ship with the destination port and calculate the perpendiculate that split the map in two areas. In case to do a movement in the area where there isn't the destination port the negative rewards are duplicated.
+
+The result with this solution are perfect, all the route finish successfully. In this sections we are talking only to the success rate of ship routing, but in posteriours section we talk abaout the cross buoys and distances.
 
 ### Third solution. Heuristic 2: Direction of destination
 
