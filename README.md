@@ -59,7 +59,17 @@ The specific algorithm I used was Q-learning. To implement this we need to build
 
 $$ Q^{new}(s_t, a_t) = (1-α) * Q(s_t, a_t)+α(r+γ * max_{a_{t+1}}Q(s_{t+1}, a_{t+1})) $$
 
+$ Q^{new}(s_t, a_t) $ is the current value for a state and an action. α is the weighting factor between the current value and the new value based on the reward of the current move. r is the reward. γ is the discount factor.
+
 One matrix is useful for one destination port, for this reason we need to build five matrix, one for each port. When we have the matrix we must begin to learn, for this we begin to move the ship randomly. During iterations, we started mixing random actions and matrix-based actions. In the end, actions will be taken mostly based on the matrix. To control for chance we need to use a variable ε. This variable will decrease exponentially with the step of the iteration until reaching the minimum.
+
+I created three solutions based on this algorithm and applying some heuristic technique on some solutions. For all solutions, I initialize the matrix to the value minus infinity.
+
+### First solution. No heuristics
+
+### Second solution. Heuristic 1: No return
+
+### Third solution. Heuristic 2: Direction of destination
 
 ## Conclusions
 
