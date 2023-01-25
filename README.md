@@ -9,9 +9,9 @@
     * [Creation](#creation)
     * [Inputs and Outputs](#inputs-and-outputs)
 * [Solutions](#solutions)
-   * [First solution. No heuristics](first-solution.-no-heuristics)
-   * [Second solution. Heuristic 1: No return](second-solution.-heuristic-1:-no-return)
-   * [Third solution. Heuristic 2: Direction of destination](third-solution.-heuristic-2:-direction-of-destination)
+   * [First solution. No heuristics](#first-solution.-no-heuristics)
+   * [Second solution. Heuristic 1: No return](#second-solution.-heuristic-1:-no-return)
+   * [Third solution. Heuristic 2: Direction of destination](#third-solution.-heuristic-2:-direction-of-destination)
 * [Conclusions](#conclusions)
 * [Final video](#final-video)
 * [Author](#author)
@@ -78,17 +78,19 @@ In this first solution I applied the original algorithm, without variation. The 
 The green dot is the destination and the rest of the red dots are the different origin ports. The error appears when we start at port 3. The drawback of the algorithm is that when the port is very far from the destination and there are no intermediate ports on the routes, you will likely have trouble reaching the destination. If there is a port in the middle, it probably fixes this error, because learning from each port is used for the others.
 
 ### Second solution. Heuristic 1: No return
-<img src="https://github.com/Javier-21/Ship_Routing_Optimitzation/blob/master/rsc/h1.png" align="right" width="400" alt="Heuristic 1: No return"/>
+<img src="https://github.com/Javier-21/Ship_Routing_Optimitzation/blob/master/rsc/h1.png" align="right" width="300" alt="Heuristic 1: No return"/>
 
 In the second solution we apply a heuristic. We need to find the vector that joins the ship to the destination port and calculate the perpendicular that divides the map into two areas. In case of making a movement in the area where the destination port is not located, the negative rewards are doubled.
 
 The result with this solution is perfect, all the trips end successfully. In this section we are only talking about the success rate of boat routes, but in later sections we will talk about crossed buoys and distances.
 
 ### Third solution. Heuristic 2: Direction of destination
-<img src="https://github.com/Javier-21/Ship_Routing_Optimitzation/blob/master/rsc/h2.png" align="right" width="400" alt="Heuristic 1: No return"/>
-In this solution we apply other heuristic. In this case we need to find the vector that joins the ship with the destination port too. The difference is that now we calculate the angle with this vector and each movement. Depends of the grade we modify the reward multiplying for a factor between 1 and 2. The reward is calculated with the next formula:
+<img src="https://github.com/Javier-21/Ship_Routing_Optimitzation/blob/master/rsc/h2.png" align="right" width="300" alt="Heuristic 1: No return"/>
+In this solution we apply another heuristic. In this case we also need to find the vector that joins the ship with the destination port. The difference is that now we calculate the angle of this vector and each move. Depending on the degree we modify the reward multiplying by a factor between 1 and 2. The reward is calculated with the following formula:
 
 $$ r = r * (1 + |β|/180) $$
+
+β is the angle, and it is used in absolute value because the direction does not matter, only the angle is relevant. Like the previous heuristic, the reward is only changed if it is negative.
 
 <p align="center">
 <img src="https://github.com/Javier-21/Ship_Routing_Optimitzation/blob/master/rsc/h2_heatmap.png" width="400" alt="Error solution 1"/>
